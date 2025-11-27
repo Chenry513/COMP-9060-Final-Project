@@ -294,13 +294,19 @@ conda create -n baseline_env
 conda activate baseline_env
 ```
 
-2. Install baseline dependencies:
+2. Make sure pip is installed in your environment:
+
+```bash
+conda install pip
+```
+
+3. Install baseline dependencies:
 
 ```bash
 pip install -r requirements_baselines.txt
 ```
 
-3. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as:
+4. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as (should automatically be in the same folder):
 
 - markov_baseline.py
 
@@ -308,7 +314,7 @@ pip install -r requirements_baselines.txt
 
 - hmm_baseline.py
 
-4. Run each baseline:
+5. Run each baseline:
 
 ```bash
 python markov_baseline.py
