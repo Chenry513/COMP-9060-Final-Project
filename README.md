@@ -265,19 +265,25 @@ You can use `conda`, `venv`, or any other virtual environment tool. Below is a s
 1. Create and activate a virtual environment:
 
 ```bash
-python -m venv bpe_env
-bpe_env\Scripts\activate
+conda create -n bpe_env
+conda activate bpe_env
 ```
 
-2. Install dependencies for the BPE model:
+2. Make sure pip is installed in your environment:
+
+```bash
+conda install pip
+```
+
+3. Install dependencies for the BPE model:
 
 ```bash
 pip install -r requirements_bpe.txt
 ```
 
-3. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as bpe_transformer.py.
+4. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as bpe_transformer.py (should automatically be the case).
 
-4. Run the BPE + Transformer model (note this model will take a long time to finish training):
+5. Run the BPE + Transformer model (note this model will take a long time to finish training):
 
 ```bash
 python bpe_transformer.py
