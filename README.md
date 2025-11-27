@@ -290,8 +290,8 @@ This will train the BPE tokenizer and Transformer, print training / validation m
 1. Create and activate another environment:
 
 ```bash
-python -m venv baseline_env
-baseline_env\Scripts\activate
+conda create -n baseline_env 
+conda activate baseline_env
 ```
 
 2. Install baseline dependencies:
