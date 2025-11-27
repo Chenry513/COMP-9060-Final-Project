@@ -265,7 +265,7 @@ You can use `conda`, `venv`, or any other virtual environment tool. Below is a s
 1. Create and activate a virtual environment:
 
 ```bash
-conda create -n bpe_env
+conda create -n bpe_env python=3.10
 conda activate bpe_env
 ```
 
