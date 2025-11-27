@@ -253,7 +253,7 @@ Main files:
 
 ## 4. Environments and Installation
 
-Because the BPE + Transformer code depends on a specific combination of `torch`, `tokenizers`, and `numpy`, we recommend **two separate environments**:
+Because the BPE + Transformer code depends on a specific combination of `torch`, `tokenizers`, and `numpy`, we recommend **two separate environments**, also make sure that pip is installed in both of your environments:
 
 - one for the **BPE + Transformer** model,
 - one for the **classical baselines**.
