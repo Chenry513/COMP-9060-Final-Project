@@ -160,5 +160,25 @@ def main():
     print("confusion matrix:\n", confusion_matrix(y_test, y_pred))
 
 
+    class_list = sorted(ngram_models.keys())
+    y_prob = np.zeros((len(X_test), len(class_list)))
+    for i, seq in enumerate(X_test):
+        scores = []
+        for c in class_list:
+            counts, context_totals = ngram_models[c]
+            scores.append(ngram_log_likelihood(np.array(seq, dtype=int), N, counts, context_totals, vocab_size))
+        scores = np.array(scores)
+        exp_scores = np.exp(scores - scores.max())
+        probs = exp_scores / exp_scores.sum()
+        y_prob[i, :] = probs
+
+    import os
+    os.makedirs("model_outputs", exist_ok=True)
+    np.save("model_outputs/ngram_y_true.npy", y_test)
+    np.save("model_outputs/ngram_y_pred.npy", y_pred)
+    np.save("model_outputs/ngram_y_prob.npy", y_prob)
+    print("Saved N-gram outputs to model_outputs/")
+
+
 if __name__ == "__main__":
     main()

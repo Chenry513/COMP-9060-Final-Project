@@ -366,6 +366,20 @@ def main():
         print("  confusion matrix:\n", cm)
         print(report_str)
 
+        class_list = sorted(label_to_idx.keys())
+        y_prob = np.zeros((len(X_test_idx), len(class_list)))
+        for i, seq in enumerate(sequences_test):
+            scores = []
+            for c in class_list:
+                scores.append(model(torch.tensor(encode_bpe(seq)).unsqueeze(0).to(device)))
+            scores = np.array(scores)
+            exp_scores = np.exp(scores - scores.max())
+            probs = exp_scores / exp_scores.sum()
+            y_prob[i, :] = probs  
+        np.save("model_outputs/bpe_transformer_y_true.npy", all_true)
+        np.save("model_outputs/bpe_transformer_y_pred.npy", all_preds)
+        np.save("model_outputs/bpe_transformer_y_prob.npy", y_prob)
+        print("Saved BPE Transformer outputs to model_outputs/")
 
 if __name__ == "__main__":
     main()

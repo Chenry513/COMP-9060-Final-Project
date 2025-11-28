@@ -129,6 +129,24 @@ def main():
     print(f"markov baseline macro F1: {f1_macro:.4f}")
     print("confusion matrix:\n", confusion_matrix(y_test, y_pred))
 
+    class_list = sorted(class_log_transitions.keys())
+    y_prob = np.zeros((len(X_test), len(class_list)))
+    for i, seq in enumerate(X_test):
+        scores = []
+        for c in class_list:
+            scores.append(markov_log_likelihood(seq, class_log_transitions[c]))
+        scores = np.array(scores)
+        exp_scores = np.exp(scores - scores.max())
+        probs = exp_scores / exp_scores.sum()
+        y_prob[i, :] = probs
+
+    import os
+    os.makedirs("model_outputs", exist_ok=True)
+    np.save("model_outputs/markov_y_true.npy", y_test)
+    np.save("model_outputs/markov_y_pred.npy", y_pred)
+    np.save("model_outputs/markov_y_prob.npy", y_prob)
+    print("Saved Markov outputs to model_outputs/")
+
 
 if __name__ == "__main__":
     main()

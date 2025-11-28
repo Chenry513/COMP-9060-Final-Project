@@ -1,0 +1,6 @@
+**/venv*/
+bpe_env
+baseline_env
+venv
+venv310
+__pycache__/data_emaki.cpython-314

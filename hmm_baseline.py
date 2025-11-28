@@ -123,6 +123,23 @@ def main():
     print(f"HMM baseline accuracy: {acc:.4f}")
     print(f"HMM baseline macro F1: {f1_macro:.4f}")
     print("confusion matrix:\n", confusion_matrix(y_test, y_pred))
+    print("confusion matrix:\n", confusion_matrix(y_test, y_pred))
+
+    class_list = sorted(hmm_models.keys())
+    y_prob = np.zeros((len(X_test), len(class_list)))
+    for i, seq in enumerate(X_test):
+        seq_arr = np.array(seq, dtype=int).reshape(-1, 1)
+        scores = np.array([hmm_models[c].score(seq_arr) for c in class_list])
+        exp_scores = np.exp(scores - scores.max())
+        probs = exp_scores / exp_scores.sum()
+        y_prob[i, :] = probs
+
+    import os
+    os.makedirs("model_outputs", exist_ok=True)
+    np.save("model_outputs/hmm_y_true.npy", y_test)
+    np.save("model_outputs/hmm_y_pred.npy", y_pred)
+    np.save("model_outputs/hmm_y_prob.npy", y_prob)
+    print("Saved HMM outputs to model_outputs/")
 
 
 if __name__ == "__main__":

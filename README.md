@@ -316,3 +316,67 @@ python ngram_baseline.py
 python hmm_baseline.py
 ```
 Each script will print its own accuracy, macro F1, and confusion matrix on the same EMAKI task.
+## Visualization
+
+## Model Output Saving
+
+Each baseline and transformer model script has been modified to save predictions and probabilities for downstream visualization and analysis.
+
+**What is saved:**
+- `{model}_y_true.npy` — Ground truth labels from test set
+- `{model}_y_pred.npy` — Model predictions on test set
+- `{model}_y_prob.npy` — Predicted class probabilities (softmax output) on test set
+
+**Where it is saved:**
+All outputs are saved to `model_outputs/` folder in the project root.
+
+**How it works:**
+After training and evaluation on the test set, each model script computes softmax probabilities from raw scores/logits, then saves all three arrays using `np.save()`. This enables:
+- Post-hoc evaluation metrics (ROC-AUC, PR-AUC, per-class metrics)
+- Visualization of confusion matrices, ROC curves, precision-recall curves
+- Model comparison across baselines and deep learning approaches
+- Reproducibility without re-training
+
+**Automatic generation:**
+Run each model script to generate outputs, commands are the same as we've specified above.
+
+After all scripts complete, `model_outputs/` will contain 12 files (3 per model × 4 models).
+
+## Visualization
+
+Professional visualization script that generates comprehensive performance metrics and plots for all trained models.
+
+**Features:**
+- Loads model outputs (y_true, y_pred, y_prob) from `model_outputs/` folder
+- Generates per-model visualizations:
+  - Confusion matrices (raw counts + normalized percentages)
+  - Per-class metrics (Precision, Recall, F1)
+  - ROC curves (One-vs-Rest for each class)
+  - Precision-Recall curves (One-vs-Rest for each class)
+  - Class distribution (True vs Predicted counts)
+  - Summary report (single-page overview of all metrics)
+- Generates model comparison chart (all models ranked by F1-score)
+- High-resolution output (300 dpi) saved to `visualizations/` folder
+
+**Usage:**
+```bash
+python3 visualize.py --input_dir model_outputs --output_dir visualizations --labels 3 4 5
+```
+
+Or with defaults:
+```bash
+python3 visualize.py
+```
+
+**Output files:**
+- `00_model_comparison.png` — All models ranked by accuracy, F1, precision, recall
+- `{model}_01_confusion_matrix.png` — Confusion matrix (counts + normalized %)
+- `{model}_02_per_class_metrics.png` — Precision/Recall/F1 per class
+- `{model}_03_roc_curves.png` — ROC curves for each class
+- `{model}_04_pr_curves.png` — Precision-Recall curves for each class
+- `{model}_05_class_distribution.png` — True vs Predicted class distribution
+- `{model}_06_summary_report.png` — Single-page metrics summary
+
+**Prerequisites:** 
+- Model outputs must exist as `.npy` files in `model_outputs/` with naming: `{model}_y_true.npy`, `{model}_y_pred.npy`, `{model}_y_prob.npy`
+- Dependencies: numpy, matplotlib, seaborn, scikit-learn
