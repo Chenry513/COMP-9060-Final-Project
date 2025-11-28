@@ -253,7 +253,7 @@ Main files:
 
 ## 4. Environments and Installation
 
-Because the BPE + Transformer code depends on a specific combination of `torch`, `tokenizers`, and `numpy`, we recommend **two separate environments**:
+Because the BPE + Transformer code depends on a specific combination of `torch`, `tokenizers`, and `numpy`, we recommend **two separate environments**, also make sure that pip is installed in both of your environments:
 
 - one for the **BPE + Transformer** model,
 - one for the **classical baselines**.
@@ -265,19 +265,25 @@ You can use `conda`, `venv`, or any other virtual environment tool. Below is a s
 1. Create and activate a virtual environment:
 
 ```bash
-python -m venv bpe_env
-bpe_env\Scripts\activate
+conda create -n bpe_env python=3.10
+conda activate bpe_env
 ```
 
-2. Install dependencies for the BPE model:
+2. Make sure pip is installed in your environment:
+
+```bash
+conda install pip
+```
+
+3. Install dependencies for the BPE model:
 
 ```bash
 pip install -r requirements_bpe.txt
 ```
 
-3. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as bpe_transformer.py.
+4. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as bpe_transformer.py (should automatically be the case).
 
-4. Run the BPE + Transformer model (note this model will take a long time to finish training):
+5. Run the BPE + Transformer model (note this model will take a long time to finish training):
 
 ```bash
 python bpe_transformer.py
@@ -290,17 +296,23 @@ This will train the BPE tokenizer and Transformer, print training / validation m
 1. Create and activate another environment:
 
 ```bash
-python -m venv baseline_env
-baseline_env\Scripts\activate
+conda create -n baseline_env 
+conda activate baseline_env
 ```
 
-2. Install baseline dependencies:
+2. Make sure pip is installed in your environment:
+
+```bash
+conda install pip
+```
+
+3. Install baseline dependencies:
 
 ```bash
 pip install -r requirements_baselines.txt
 ```
 
-3. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as:
+4. Make sure EMAKI_utt.pkl and data_emaki.py are in the same folder as (should automatically be in the same folder):
 
 - markov_baseline.py
 
@@ -308,7 +320,7 @@ pip install -r requirements_baselines.txt
 
 - hmm_baseline.py
 
-4. Run each baseline:
+5. Run each baseline:
 
 ```bash
 python markov_baseline.py
